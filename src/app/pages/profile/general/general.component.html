@@ -1,0 +1,95 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+  <!-- Personal Information Section -->
+  <h2 class="col-span-full text-2xl font-bold">Personal Information</h2>
+
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <mat-select id="title" formControlName="title">
+        <mat-option value="mr">Mr</mat-option>
+        <mat-option value="mrs">Mrs</mat-option>
+        <mat-option value="ms">Ms</mat-option>
+        <mat-option value="dr">Dr</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput id="firstName" type="text" formControlName="firstName">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput id="lastName" type="text" formControlName="lastName">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Spouse/Partner</mat-label>
+      <input matInput id="spouse" type="text" formControlName="spouse">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Company</mat-label>
+      <input matInput id="company" type="text" formControlName="company">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Job Title</mat-label>
+      <input matInput id="jobtitle" type="text" formControlName="jobtitle">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>URL</mat-label>
+      <input matInput id="url" type="text" formControlName="url">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Birth</mat-label>
+      <input matInput [matDatepicker]="dobPicker" id="dob" placeholder="Choose a date" formControlName="dob">
+      <mat-datepicker-toggle matSuffix [for]="dobPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dobPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Date of Death</mat-label>
+      <input matInput [matDatepicker]="dodPicker" id="dod" placeholder="Choose a date" formControlName="dod">
+      <mat-datepicker-toggle matSuffix [for]="dodPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dodPicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- <mat-divider class="col-span-full"></mat-divider> -->
+
+  <!-- Financial Information Section -->
+  <h2 class="col-span-full text-2xl font-bold">Financial Information</h2>
+
+
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Consignment</mat-label>
+      <input matInput id="consignment" type="text" formControlName="consignment">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Maximum Discount</mat-label>
+      <input matInput id="maxDiscount" type="number" formControlName="maxDiscount">
+    </mat-form-field>
+  </div>
+  <div class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>Normal Discount</mat-label>
+      <input matInput id="normalDiscount" type="number" formControlName="normalDiscount">
+    </mat-form-field>
+  </div>
+
+</form>

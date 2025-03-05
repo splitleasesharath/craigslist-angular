@@ -1,0 +1,49 @@
+.full-screen-container{
+  height: 100%;
+}
+
+.content-container{
+  background-color: #F1F3F4;
+  height: calc(100% - 60px);
+}
+
+:host ::ng-deep .custom-toolbar {
+  // background-color: #4285F4;
+  background-color: #3f51b5;
+  color: white;
+  height: 60px;
+}
+
+:host ::ng-deep mat-sidenav mat-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+:host ::ng-deep mat-sidenav  {
+  background-color: #F1F3F4 !important;
+}
+
+
+.custom-expansion-panel {
+  background-color: #F1F3F4;
+}
+
+.custom-expansion-panel .mat-expansion-panel-header {
+  background-color: #F1F3F4;
+}
+
+.custom-expansion-panel .mat-expansion-panel-content {
+  background-color: #FFFFFF;
+}
+
+.custom-expansion-panel .mat-expansion-panel-content mat-list-item {
+  color: #333;
+}
+
+.selected {
+  background-color: rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+::ng-deep .no-padding-dialog .mat-dialog-container {
+  padding: 0 !important;
+}

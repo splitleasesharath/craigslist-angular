@@ -1,0 +1,119 @@
+<div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
+  <h2 class="text-xl font-semibold mb-4">Transaction Details</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+    <mat-form-field class="w-full">
+      <mat-label>Transaction Number</mat-label>
+      <input matInput [value]="transactionDetails.transactionNumber" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Location</mat-label>
+      <input matInput [value]="transactionDetails.location" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Sale Type</mat-label>
+      <input matInput [value]="transactionDetails.saleType" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Tax Type</mat-label>
+      <input matInput [value]="transactionDetails.taxType" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Date Issued</mat-label>
+      <input matInput [value]="transactionDetails.dateIssued" disabled>
+    </mat-form-field>
+  </div>
+
+  <!-- Invoice To Section -->
+  <div class="mb-4">
+    <h3 class="text-lg font-medium mb-2">Invoice To</h3>
+    <div class="bg-gray-100 p-4 rounded">
+      <p>{{ transactionDetails.invoiceTo.name }}</p>
+    </div>
+  </div>
+
+  <!-- Ship To and Bill To Sections -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div>
+      <h3 class="text-lg font-medium mb-2">Ship To</h3>
+      <div class="bg-gray-100 p-4 rounded">
+        <p>{{ transactionDetails.shipTo.name }}</p>
+        <p>{{ transactionDetails.shipTo.address }}</p>
+        <p>{{ transactionDetails.shipTo.email }}</p>
+        <p>{{ transactionDetails.shipTo.phone }}</p>
+      </div>
+    </div>
+    <div>
+      <h3 class="text-lg font-medium mb-2">Bill To</h3>
+      <div class="bg-gray-100 p-4 rounded">
+        <p>{{ transactionDetails.billTo.name }}</p>
+        <p>{{ transactionDetails.billTo.address }}</p>
+        <p>{{ transactionDetails.billTo.email }}</p>
+        <p>{{ transactionDetails.billTo.phone }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financial Summary Section -->
+
+  <h3 class="text-lg font-medium mb-2">Financial Summary</h3>
+  <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-4">
+    
+    <mat-form-field class="w-full">
+      <mat-label>Total Before Discount</mat-label>
+      <input matInput [value]="transactionDetails.totalBeforeDiscount | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Discount Amount</mat-label>
+      <input matInput [value]="transactionDetails.discountAmount | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Subtotal</mat-label>
+      <input matInput [value]="transactionDetails.subtotal | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Sales Tax</mat-label>
+      <input matInput [value]="transactionDetails.salesTax | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Total</mat-label>
+      <input matInput [value]="transactionDetails.total | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Payments</mat-label>
+      <input matInput [value]="transactionDetails.payments | currency" disabled>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Balance</mat-label>
+      <input matInput [value]="transactionDetails.balance | currency" disabled>
+    </mat-form-field>
+  </div>
+
+  <!-- Items Data Table -->
+  <div class="w-full mb-6">
+    <h3 class="text-lg font-semibold mb-4">Items</h3>
+    <div class="overflow-x-auto">
+      <ngx-datatable
+        class="min-w-full divide-y divide-gray-200"
+        tableClass="table table-striped table-bordered table-hover min-w-full"
+        [tableId]="'checkbox'"
+        [data]="data"
+        [options]="options"
+        [columns]="columns"
+        (checkboxClick)="onCheckboxClick($event)">
+      </ngx-datatable>
+    </div>
+  </div>
+
+  <!-- Payments Data Table -->
+  <div class="w-full">
+    <h3 class="text-lg font-medium mt-6 mb-4">Payments</h3>
+    <ngx-datatable
+      class="min-w-full divide-y divide-gray-200"
+      tableClass="table table-striped table-bordered table-hover min-w-full"
+      [tableId]="'checkbox'"
+      [data]="paymentsData"
+      [options]="paymentsOptions"
+      [columns]="paymentsColumns">
+    </ngx-datatable>
+  </div>
+</div>

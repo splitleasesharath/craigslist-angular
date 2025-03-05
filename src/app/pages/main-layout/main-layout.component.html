@@ -1,0 +1,63 @@
+<div class="full-screen-container">
+  <mat-toolbar class="custom-toolbar">
+    <!-- Toolbar content remains the same -->
+    <button mat-icon-button matTooltip="Application Menu" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    Split Lease
+    <span style="flex: 1 1 auto;"></span>
+    <div>
+      <button mat-icon-button matTooltip="Profile" [matMenuTriggerFor]="accountMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #accountMenu [overlapTrigger]="false" yPosition="below">
+        <button mat-menu-item (click)="openDialog()">
+          <mat-icon>person</mat-icon><span>Profile</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon>Logout
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <mat-sidenav-container style="height: 100%;">
+      <mat-sidenav #sidenav [mode]="sidenavMode" [class.mat-elevation-z4]="true" style="width: 240px">
+        <mat-nav-list dense style="padding-top: 0;">
+          <ng-container *ngFor="let item of menuItems">
+            <ng-container *ngIf="!item.hasSubmenu">
+              <mat-list-item
+                [routerLink]="item.isDialog ? null : item.url"
+                [class.selected]="item.isSelected"
+                (click)="onMenuItemClick(item)">
+                <mat-icon>{{ item.icon }}</mat-icon> <span class="ml-3 text-sm">{{ item.name }}</span>
+              </mat-list-item>
+            </ng-container>
+
+            <ng-container *ngIf="item.hasSubmenu">
+              <mat-expansion-panel [class.mat-elevation-z0]="true" dense class="custom-expansion-panel">
+                <mat-expansion-panel-header>{{ item.name }}</mat-expansion-panel-header>
+                <mat-nav-list dense>
+                  <a *ngFor="let subItem of item.submenu"
+                     mat-list-item
+                     [routerLink]="subItem.isDialog ? null : subItem.url"
+                     [class.selected]="subItem.isSelected"
+                     (click)="onMenuItemClick(subItem)">
+                    <mat-icon>{{ subItem.icon }}</mat-icon>{{ subItem.name }}
+                  </a>
+                </mat-nav-list>
+              </mat-expansion-panel>
+            </ng-container>
+          </ng-container>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <div class="pt-3 pl-3 h-full" style="background-color: #F1F3F4;">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

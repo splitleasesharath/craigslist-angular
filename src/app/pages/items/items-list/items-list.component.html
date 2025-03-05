@@ -1,0 +1,51 @@
+<div class="w-full px-4">
+    <h3 class="text-lg font-semibold mb-4">Datatable with checkbox example</h3>
+    <div class="overflow-x-auto">
+      <ngx-datatable
+        class="min-w-full divide-y divide-gray-200"
+        tableClass="table table-striped table-bordered table-hover min-w-full"
+        [tableId]="'checkbox'"
+        [data]="data"
+        [options]="options"
+        [columns]="columns"
+        (checkboxClick)="onCheckboxClick($event)"
+      >
+        <ngx-caption>
+          <div class="flex items-center justify-between py-2">
+            <b class="text-lg font-medium">
+              <i class="fa fa-table mr-2" aria-hidden="true"></i>
+              Basic Data Table List
+            </b>
+          </div>
+        </ngx-caption>
+      </ngx-datatable>
+    </div>
+  </div>
+  
+
+<div class="row">
+    <div class="col-sm-12">
+      <h3>Datatable with checkbox and row detail example</h3>
+      <ngx-datatable tableClass="table table-striped table-bordered table-hover" 
+      [tableId]="'checkboxWithRowDetail'" [data]="dataWithRowDetail" [options]="optionsWithRowDetail" 
+        [columns]="columnsWithRowDetail"   (checkboxClick)="onCheckboxClick($event)" >
+        <ngx-caption>
+          <div class="row">
+            <div class="col-sm-12 col-xs-12 col-12 ">
+              <b>
+                <i class="fa fa-table" aria-hidden="true"></i>
+                Basic Data Table List
+              </b>
+            </div>
+          </div>
+        </ngx-caption>
+
+        <ng-template #rowDetailTpl let-row let-rowIndex="rowIndex">
+            <h3>{{row.name}}</h3>
+            <p>{{row.phone}}, {{row.date}}</p>
+        </ng-template>
+
+
+      </ngx-datatable>
+    </div>
+  </div> 
