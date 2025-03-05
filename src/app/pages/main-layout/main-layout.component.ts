@@ -42,6 +42,13 @@ export class MainLayoutComponent implements OnInit {
       hasSubmenu: false
     },
     {
+      name: 'Renew',
+      url: '/renew',
+      icon: 'casino',
+      isSelected: false,
+      hasSubmenu: false
+    },
+    {
       name: 'Items',
       url: '/item',
       icon: 'casino',
