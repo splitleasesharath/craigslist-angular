@@ -48,13 +48,13 @@ export class MainLayoutComponent implements OnInit {
       isSelected: false,
       hasSubmenu: false
     },
-    {
-      name: 'Items',
-      url: '/item',
-      icon: 'casino',
-      isSelected: false,
-      hasSubmenu: false
-    },
+    // {
+    //   name: 'Items',
+    //   url: '/item',
+    //   icon: 'casino',
+    //   isSelected: false,
+    //   hasSubmenu: false
+    // },
     {
       name: 'Reports',
       url: '/report',
