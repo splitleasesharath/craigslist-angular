@@ -13,7 +13,6 @@ const routes: Routes = [
       { path: 'repost', loadChildren: () => import('./re-post/re-post.module').then(m => m.RePostModule) },
       { path: 'renew', loadChildren: () => import('./re-new/re-new.module').then(m => m.ReNewModule) },
       { path: 'item', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule) },
-      { path: 'order', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
       { path: 'report', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

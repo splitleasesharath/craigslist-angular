@@ -56,13 +56,6 @@ export class MainLayoutComponent implements OnInit {
       hasSubmenu: false
     },
     {
-      name: 'Orders',
-      url: '/order',
-      icon: 'local_grocery_store',
-      isSelected: false,
-      hasSubmenu: false
-    },
-    {
       name: 'Reports',
       url: '/report',
       icon: 'assignment',
