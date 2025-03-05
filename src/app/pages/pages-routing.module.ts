@@ -10,6 +10,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) }, // Lazy load DashboardModule
       { path: 'post', loadChildren: () => import('./post/post.module').then(m => m.PostModule) },
+      { path: 'repost', loadChildren: () => import('./re-post/re-post.module').then(m => m.RePostModule) },
       { path: 'item', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule) },
       { path: 'order', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
       { path: 'report', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },

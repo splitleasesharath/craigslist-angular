@@ -12,6 +12,7 @@ import { ContactComponent } from './profile/contact/contact.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { BioComponent } from './profile/bio/bio.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { RePostComponent } from './re-post/re-post.component';
 
 
 
@@ -24,6 +25,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     GeneralComponent,
     ContactComponent,
     BioComponent,
+    RePostComponent,
   ],
   imports: [
     CommonModule,
