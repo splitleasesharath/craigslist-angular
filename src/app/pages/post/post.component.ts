@@ -12,6 +12,25 @@ export class PostComponent implements OnInit {
   showForm: boolean = false;
   private apiUrl = 'http://localhost:3000/flask/create_craigslist';
 
+  // New arrays for dropdown options
+  laundryOptions: string[] = [
+    'w/d in unit',
+    'w/d hookups',
+    'laundry in bldg',
+    'laundry on site',
+    'no laundry on site'
+  ];
+
+  parkingOptions: string[] = [
+    'carport',
+    'attached garage',
+    'detached garage',
+    'off-street parking',
+    'street parking',
+    'valet parking',
+    'no parking'
+  ];
+
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
@@ -60,49 +79,6 @@ export class PostComponent implements OnInit {
 
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
       (response) => {
-        /* 
-          Expected response structure:
-          {
-            additional_suggestions: {
-              amenities: [ "No laundry on site", "Street parking available", "Furnished" ],
-              bathrooms: "2",
-              bedrooms: "1",
-              location: "Harlem / Morningside",
-              price: "1900"
-            },
-            description: "Immaculately furnished 1 BD/2BTH apartment situated in the heart of Harlem/Morningside...",
-            listing_details: {
-              "Air conditioning": false,
-              "Available On": "",
-              "Bathrooms": 1,
-              "Bedrooms": 1,
-              "Borough": "brooklyn",
-              "Category": "",
-              "Cats": false,
-              "City": "",
-              "Description": "If you are looking for a Pied-a-terre situation, keep reading! ...",
-              "Dogs": false,
-              "EV charging": false,
-              "Furnished": true,
-              "Housing Type": "apartment",
-              "Laundry": "no laundry on site",
-              "Link": "https://docs.google.com/document/...",
-              "Location": "Harlem / Morningside",
-              "No Smoking": true,
-              "Parking": "street parking",
-              "Price": 105,
-              "Private Bath": true,
-              "Private Room": true,
-              "Rent Period": "",
-              "Sqft": "",
-              "Street": "",
-              "Title": "Pay p/night renting weekdays only! Ground Floor Spacious Apartment",
-              "Wheelchair accessible": false,
-              "Zip": 11221
-            },
-            title: "COMMUTER'S HAVEN: 1BD/2BTH; FULLY-FURNISHED GEM with BREATHTAKING NYC VIEWS- Lower Manhattan"
-          }
-        */
         this.patchForm(response);
         // Reveal the form after successful patching.
         this.showForm = true;

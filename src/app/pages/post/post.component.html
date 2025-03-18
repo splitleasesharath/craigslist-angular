@@ -74,21 +74,23 @@
         <mat-label>Bathrooms</mat-label>
         <input matInput formControlName="bathrooms">
       </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Amenity Laundry</mat-label>
-        <input matInput formControlName="amenity_laundry">
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Amenity Parking</mat-label>
-        <input matInput formControlName="amenity_parking">
-      </mat-form-field>
+      <!-- Updated Dropdown for Laundry -->
       <mat-form-field class="w-full">
         <mat-label>Building Laundry</mat-label>
-        <input matInput formControlName="laundry">
+        <mat-select formControlName="laundry">
+          <mat-option *ngFor="let option of laundryOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+      <!-- Updated Dropdown for Parking -->
       <mat-form-field class="w-full">
         <mat-label>Property Parking</mat-label>
-        <input matInput formControlName="parking">
+        <mat-select formControlName="parking">
+          <mat-option *ngFor="let option of parkingOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field class="w-full">
         <mat-label>Available On</mat-label>
