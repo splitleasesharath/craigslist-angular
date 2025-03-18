@@ -38,7 +38,22 @@ export class PostComponent implements OnInit {
     'vacation rentals'
   ];
 
-  constructor(private fb: FormBuilder, private dataService: DataService) {}
+  aptTypeOptions: string[] = [
+    'apartment',
+    'condo',
+    'cottage/cabin',
+    'duplex',
+    'flat',
+    'house',
+    'in-law',
+    'loft',
+    'townhouse',
+    'manufactured',
+    'assisted living',
+    'land'
+  ];
+
+  constructor(private fb: FormBuilder, private dataService: DataService) { }
 
   ngOnInit(): void {
     // Initialize the form with default values.

@@ -1,14 +1,14 @@
 <div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
   <h2 class="text-xl font-semibold mb-4">Listing Details</h2>
-  
+
   <!-- Button to generate data -->
   <button mat-raised-button color="primary" (click)="postDataAndPatchForm()" *ngIf="!showForm">
     Generate Data
   </button>
-  
+
   <!-- Form is hidden until API response is received -->
   <form [formGroup]="listingForm" *ngIf="showForm">
-    
+
     <!-- Schedule Post Section with styling and separator -->
     <div class="mb-6">
       <div class="flex items-center justify-start">
@@ -86,10 +86,16 @@
         <mat-label>Rent Period</mat-label>
         <input matInput formControlName="rent_period">
       </mat-form-field>
+
       <mat-form-field class="w-full">
         <mat-label>Apartment Type</mat-label>
-        <input matInput formControlName="apt_type">
+        <mat-select formControlName="apt_type">
+          <mat-option *ngFor="let option of aptTypeOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
+
       <mat-form-field class="w-full">
         <mat-label>Bedrooms</mat-label>
         <input matInput formControlName="bedrooms">
@@ -115,10 +121,6 @@
             {{ option }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
-      <mat-form-field class="w-full">
-        <mat-label>Available On</mat-label>
-        <input matInput formControlName="available_on" type="date">
       </mat-form-field>
       <mat-form-field class="w-full">
         <mat-label>Street</mat-label>
