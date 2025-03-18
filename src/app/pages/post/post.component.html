@@ -1,148 +1,120 @@
 <div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
-    <h2 class="text-xl font-semibold mb-4">Listing Details</h2>
-    
-    <!-- Button to generate data -->
-    <button mat-raised-button color="primary" (click)="postDataAndPatchForm()" *ngIf="!showForm">
-      Generate Data
-    </button>
-    
-    <!-- Form is hidden until API response is received -->
-    <form [formGroup]="listingForm" *ngIf="showForm">
-      <!-- Section: Basic Information -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <mat-form-field class="w-full">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Title</mat-label>
-          <input matInput formControlName="title">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description"></textarea>
-        </mat-form-field>
-      </div>
+  <h2 class="text-xl font-semibold mb-4">Listing Details</h2>
   
-      <!-- Section: Property Details -->
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-        <mat-form-field class="w-full">
-          <mat-label>Price</mat-label>
-          <input matInput formControlName="price">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Borough</mat-label>
-          <input matInput formControlName="borough">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Zip Code</mat-label>
-          <input matInput formControlName="zipcode">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Category</mat-label>
-          <input matInput formControlName="category">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Location</mat-label>
-          <input matInput formControlName="location">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Square Footage</mat-label>
-          <input matInput formControlName="sqft">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Rent</mat-label>
-          <input matInput formControlName="rent">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Rent Period</mat-label>
-          <input matInput formControlName="rent_period">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Apartment Type</mat-label>
-          <input matInput formControlName="apt_type">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Bedrooms</mat-label>
-          <input matInput formControlName="bedrooms">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Bathrooms</mat-label>
-          <input matInput formControlName="bathrooms">
-        </mat-form-field>
-      </div>
+  <!-- Button to generate data -->
+  <button mat-raised-button color="primary" (click)="postDataAndPatchForm()" *ngIf="!showForm">
+    Generate Data
+  </button>
   
-      <!-- Section: Amenities & Features -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <mat-form-field class="w-full">
-          <mat-label>Amenity Laundry</mat-label>
-          <input matInput formControlName="amenity_laundry">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Amenity Parking</mat-label>
-          <input matInput formControlName="amenity_parking">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Building Laundry</mat-label>
-          <input matInput formControlName="laundry">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Property Parking</mat-label>
-          <input matInput formControlName="parking">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Pets (Cat)</mat-label>
-          <input matInput formControlName="pets_cat">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Pets (Dog)</mat-label>
-          <input matInput formControlName="pets_dog">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Furnished</mat-label>
-          <input matInput formControlName="is_furnished">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>No Smoking</mat-label>
-          <input matInput formControlName="no_smoking">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Wheelchair Access</mat-label>
-          <input matInput formControlName="wheelchaccess">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Air Conditioning</mat-label>
-          <input matInput formControlName="airconditioning">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>EV Charging</mat-label>
-          <input matInput formControlName="ev_charging">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Available On</mat-label>
-          <input matInput formControlName="available_on" type="date">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Street</mat-label>
-          <input matInput formControlName="street">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>City</mat-label>
-          <input matInput formControlName="city">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Private Room</mat-label>
-          <input matInput formControlName="private_room">
-        </mat-form-field>
-        <mat-form-field class="w-full">
-          <mat-label>Private Bath</mat-label>
-          <input matInput formControlName="private_bath">
-        </mat-form-field>
-      </div>
-    </form>
-  </div>
-  
+  <!-- Form is hidden until API response is received -->
+  <form [formGroup]="listingForm" *ngIf="showForm">
+    <!-- Section: Basic Information -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+
+    <!-- Section: Property Details -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+      <mat-form-field class="w-full">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Borough</mat-label>
+        <input matInput formControlName="borough">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Zip Code</mat-label>
+        <input matInput formControlName="zipcode">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Category</mat-label>
+        <input matInput formControlName="category">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Square Footage</mat-label>
+        <input matInput formControlName="sqft">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Rent</mat-label>
+        <input matInput formControlName="rent">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Rent Period</mat-label>
+        <input matInput formControlName="rent_period">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Apartment Type</mat-label>
+        <input matInput formControlName="apt_type">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Bedrooms</mat-label>
+        <input matInput formControlName="bedrooms">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Bathrooms</mat-label>
+        <input matInput formControlName="bathrooms">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Amenity Laundry</mat-label>
+        <input matInput formControlName="amenity_laundry">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Amenity Parking</mat-label>
+        <input matInput formControlName="amenity_parking">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Building Laundry</mat-label>
+        <input matInput formControlName="laundry">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Property Parking</mat-label>
+        <input matInput formControlName="parking">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Available On</mat-label>
+        <input matInput formControlName="available_on" type="date">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Street</mat-label>
+        <input matInput formControlName="street">
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+    </div>
+
+    <!-- Section: Boolean Features (Checkboxes) -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+      <mat-checkbox formControlName="pets_cat">Pets (Cat)</mat-checkbox>
+      <mat-checkbox formControlName="pets_dog">Pets (Dog)</mat-checkbox>
+      <mat-checkbox formControlName="is_furnished">Furnished</mat-checkbox>
+      <mat-checkbox formControlName="no_smoking">No Smoking</mat-checkbox>
+      <mat-checkbox formControlName="wheelchaccess">Wheelchair Access</mat-checkbox>
+      <mat-checkbox formControlName="airconditioning">Air Conditioning</mat-checkbox>
+      <mat-checkbox formControlName="ev_charging">EV Charging</mat-checkbox>
+      <mat-checkbox formControlName="private_room">Private Room</mat-checkbox>
+      <mat-checkbox formControlName="private_bath">Private Bath</mat-checkbox>
+    </div>
+  </form>
+</div>
