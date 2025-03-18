@@ -12,7 +12,7 @@ export class PostComponent implements OnInit {
   showForm: boolean = false;
   private apiUrl = 'http://localhost:3000/flask/create_craigslist';
 
-  // New arrays for dropdown options
+  // New dropdown options arrays
   laundryOptions: string[] = [
     'w/d in unit',
     'w/d hookups',
@@ -31,11 +31,17 @@ export class PostComponent implements OnInit {
     'no parking'
   ];
 
+  // New category dropdown options.
+  categoryOptions: string[] = [
+    'rooms & shares',
+    'sublets & temporary',
+    'vacation rentals'
+  ];
+
   constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
     // Initialize the form with default values.
-    // Note that private_room and private_bath are now booleans.
     this.listingForm = this.fb.group({
       email: ['bdouglas0927@gmail.com'],
       password: ['eCom2021!'],
@@ -44,7 +50,7 @@ export class PostComponent implements OnInit {
       price: [''],
       borough: [''],
       zipcode: [''],
-      category: [''],
+      category: [''], // This will be a dropdown now.
       location: [''],
       sqft: [''],
       rent: [''],
@@ -66,12 +72,16 @@ export class PostComponent implements OnInit {
       available_on: [''],
       street: [''],
       city: [''],
-      // Updated: private_room and private_bath as booleans.
       private_room: [false],
       private_bath: [false],
-      // FormArray for amenities
       amenities: this.fb.array([])
     });
+  }
+
+  // Helper to randomly select a category
+  getRandomCategory(): string {
+    const randomIndex = Math.floor(Math.random() * this.categoryOptions.length);
+    return this.categoryOptions[randomIndex];
   }
 
   postDataAndPatchForm(): void {
@@ -80,7 +90,6 @@ export class PostComponent implements OnInit {
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
       (response) => {
         this.patchForm(response);
-        // Reveal the form after successful patching.
         this.showForm = true;
       },
       (error) => {
@@ -90,20 +99,21 @@ export class PostComponent implements OnInit {
   }
 
   patchForm(apiResponse: any): void {
+    // Determine category value: use API value if available, else pick a random one.
+    const categoryFromApi = apiResponse.listing_details?.Category;
+    const categoryValue = categoryFromApi ? categoryFromApi : this.getRandomCategory();
+
     // Patch the main form controls using both top-level and nested objects.
     this.listingForm.patchValue({
-      // Top-level properties
       title: apiResponse.title,
       description: apiResponse.description,
-      // Use additional_suggestions for core listing details
       price: apiResponse.additional_suggestions.price,
       location: apiResponse.additional_suggestions.location,
       bathrooms: apiResponse.additional_suggestions.bathrooms,
       bedrooms: apiResponse.additional_suggestions.bedrooms,
-      // Additional details from listing_details
       borough: apiResponse.listing_details.Borough,
       zipcode: apiResponse.listing_details.Zip,
-      category: apiResponse.listing_details.Category,
+      category: categoryValue,
       sqft: apiResponse.listing_details.Sqft,
       apt_type: apiResponse.listing_details["Housing Type"],
       laundry: apiResponse.listing_details.Laundry,
@@ -118,9 +128,8 @@ export class PostComponent implements OnInit {
       available_on: apiResponse.listing_details["Available On"],
       street: apiResponse.listing_details.Street,
       city: apiResponse.listing_details.City,
-      // Updated: convert to booleans
-      private_room: apiResponse.listing_details["Private Room"] ? true : false,
-      private_bath: apiResponse.listing_details["Private Bath"] ? true : false
+      private_room: !!apiResponse.listing_details["Private Room"],
+      private_bath: !!apiResponse.listing_details["Private Bath"]
     });
 
     // Patch the amenities FormArray from additional_suggestions.amenities.
