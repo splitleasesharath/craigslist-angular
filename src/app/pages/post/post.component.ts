@@ -50,7 +50,7 @@ export class PostComponent implements OnInit {
       price: [''],
       borough: [''],
       zipcode: [''],
-      category: [''], // This will be a dropdown now.
+      category: [''],
       location: [''],
       sqft: [''],
       rent: [''],
@@ -74,6 +74,7 @@ export class PostComponent implements OnInit {
       city: [''],
       private_room: [false],
       private_bath: [false],
+      dateTime: [''],
       amenities: this.fb.array([])
     });
   }
