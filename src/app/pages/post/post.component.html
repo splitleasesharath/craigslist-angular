@@ -18,11 +18,13 @@
         <mat-label>Password</mat-label>
         <input matInput formControlName="password" type="password">
       </mat-form-field>
-      <mat-form-field class="w-full">
+      <!-- Title now spans full row -->
+      <mat-form-field class="w-full md:col-span-2">
         <mat-label>Title</mat-label>
         <input matInput formControlName="title">
       </mat-form-field>
-      <mat-form-field class="w-full">
+      <!-- Description now spans full row -->
+      <mat-form-field class="w-full md:col-span-2">
         <mat-label>Description</mat-label>
         <textarea matInput formControlName="description"></textarea>
       </mat-form-field>
