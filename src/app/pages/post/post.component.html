@@ -145,4 +145,9 @@
       <mat-checkbox formControlName="private_bath">Private Bath</mat-checkbox>
     </div>
   </form>
+
+  <button mat-raised-button color="primary" (click)="createNewPost()" *ngIf="showForm" [disabled]="listingForm.invalid">
+    create New Post
+  </button>
+
 </div>

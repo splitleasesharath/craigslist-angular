@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
 
 @Component({
@@ -10,7 +10,10 @@ import { DataService } from 'src/app/data.service';
 export class PostComponent implements OnInit {
   listingForm: FormGroup;
   showForm: boolean = false;
+  // Existing endpoint for postDataAndPatchForm remains unchanged.
   private apiUrl = 'http://localhost:3000/flask/create_craigslist';
+  // New endpoint for the new post call.
+  private newPostUrl = 'http://localhost:3000/post/create';
 
   // New dropdown options arrays
   laundryOptions: string[] = [
@@ -53,18 +56,18 @@ export class PostComponent implements OnInit {
     'land'
   ];
 
-  constructor(private fb: FormBuilder, private dataService: DataService) { }
+  constructor(private fb: FormBuilder, private dataService: DataService) {}
 
   ngOnInit(): void {
-    // Initialize the form with default values.
+    // Initialize the form with default values and validators for required fields.
     this.listingForm = this.fb.group({
-      email: ['bdouglas0927@gmail.com'],
+      email: ['hreyes44733@gmail.com'],
       password: ['eCom2021!'],
-      title: [''],
-      description: [''],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
       price: [''],
       borough: [''],
-      zipcode: [''],
+      zipcode: ['', Validators.required],
       category: [''],
       location: [''],
       sqft: [''],
@@ -75,8 +78,8 @@ export class PostComponent implements OnInit {
       bathrooms: [''],
       amenity_laundry: [''],
       amenity_parking: [''],
-      laundry: [''],
-      parking: [''],
+      laundry: ['', Validators.required],
+      parking: ['', Validators.required],
       pets_cat: [false],
       pets_dog: [false],
       is_furnished: [false],
@@ -87,8 +90,8 @@ export class PostComponent implements OnInit {
       available_on: [''],
       street: [''],
       city: [''],
-      private_room: [false],
-      private_bath: [false],
+      private_room: [false, Validators.required],
+      private_bath: [false, Validators.required],
       dateTime: [''],
       amenities: this.fb.array([])
     });
@@ -101,8 +104,7 @@ export class PostComponent implements OnInit {
   }
 
   postDataAndPatchForm(): void {
-    const payload = {}; // Define any payload required by your API.
-
+    const payload = {}; // Existing payload for this function.
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
       (response) => {
         this.patchForm(response);
@@ -110,6 +112,56 @@ export class PostComponent implements OnInit {
       },
       (error) => {
         console.error('Error posting data to backend:', error);
+      }
+    );
+  }
+
+  // New function to create a post with a different payload structure and endpoint.
+  createNewPost(): void {
+    const formValues = this.listingForm.value;
+    const payload = {
+      email: formValues.email,
+      password: formValues.password,
+      title: formValues.title,
+      description: formValues.description,
+      price: formValues.price,
+      borough: formValues.borough,
+      zipcode: formValues.zipcode.toString(),
+      category: formValues.category ? formValues.category : this.getRandomCategory(),
+      location: formValues.location,
+      amenities: {
+        laundry: formValues.amenity_laundry ? formValues.amenity_laundry : formValues.laundry,
+        parking: formValues.amenity_parking ? formValues.amenity_parking : formValues.parking
+      },
+      sqft: formValues.sqft.toString(),
+      pets_cat: formValues.pets_cat ? "TRUE" : "FALSE",
+      pets_dog: formValues.pets_dog ? "TRUE" : "FALSE",
+      is_furnished: formValues.is_furnished ? "TRUE" : "FALSE",
+      no_smoking: formValues.no_smoking ? "TRUE" : "FALSE",
+      wheelchaccess: formValues.wheelchaccess ? "TRUE" : "FALSE",
+      airconditioning: formValues.airconditioning ? "TRUE" : "FALSE",
+      ev_charging: formValues.ev_charging ? "TRUE" : "FALSE",
+      available_on: formValues.available_on,
+      street: formValues.street,
+      city: formValues.city,
+      rent: formValues.rent,
+      laundry: formValues.laundry,      // top-level laundry field
+      apt_type: formValues.apt_type,
+      parking: formValues.parking,      // top-level parking field
+      bedrooms: formValues.bedrooms,
+      bathrooms: formValues.bathrooms,
+      rent_period: formValues.rent_period,
+      private_room: formValues.private_room ? 1 : 0,
+      private_bath: formValues.private_bath ? 1 : 0
+    };
+
+    this.dataService.post<any>(this.newPostUrl, payload).subscribe(
+      (response) => {
+        console.log('New post successful:', response);
+        // You can perform further actions here if needed.
+      },
+      (error) => {
+        console.error('Error creating new post:', error);
       }
     );
   }
