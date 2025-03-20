@@ -61,7 +61,7 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     // Initialize the form with default values and validators for required fields.
     this.listingForm = this.fb.group({
-      email: ['hreyes44733@gmail.com'],
+      email: ['fhallock44@gmail.com'],
       password: ['eCom2021!'],
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -119,7 +119,9 @@ export class PostComponent implements OnInit {
   // New function to create a post with a different payload structure and endpoint.
   createNewPost(): void {
     const formValues = this.listingForm.value;
-    const payload = {
+
+    
+    let payload = {
       email: formValues.email,
       password: formValues.password,
       title: formValues.title,
@@ -154,6 +156,17 @@ export class PostComponent implements OnInit {
       private_room: formValues.private_room ? 1 : 0,
       private_bath: formValues.private_bath ? 1 : 0
     };
+
+    if (formValues.dateTime){
+      const date = new Date(formValues.dateTime);
+      const year = date.getFullYear();
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const day = ("0" + date.getDate()).slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      const seconds = ("0" + date.getSeconds()).slice(-2);
+      payload['targetDateTime'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 
     this.dataService.post<any>(this.newPostUrl, payload).subscribe(
       (response) => {
