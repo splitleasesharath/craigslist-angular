@@ -28,7 +28,7 @@
         <div class="w-1/4 ml-4">
           <mat-form-field class="w-full">
             <mat-label>Date &amp; Time</mat-label>
-            <input matInput formControlName="dateTime" type="datetime-local">
+            <input matInput formControlName="dateTime" type="datetime-local" [min]="minDate">
           </mat-form-field>
         </div>
       </div>

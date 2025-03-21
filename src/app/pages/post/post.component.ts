@@ -12,6 +12,9 @@ import { NotificationService } from 'src/shared/services/toastr.service';
 export class PostComponent implements OnInit {
   listingForm: FormGroup;
   showForm: boolean = false;
+
+  minDate!: string;
+
   // Existing endpoint for postDataAndPatchForm remains unchanged.
   private apiUrl = 'http://localhost:3000/flask/create_craigslist';
   // New endpoint for the new post call.
@@ -61,6 +64,8 @@ export class PostComponent implements OnInit {
   constructor(private fb: FormBuilder, private dataService: DataService, private notificationService: NotificationService, private spinnerService: SpinnerService) {}
 
   ngOnInit(): void {
+    this.minDate = this.getCurrentDateTimeLocal();
+    
     // Initialize the form with default values and validators for required fields.
     this.listingForm = this.fb.group({
       email: ['fhallock44@gmail.com'],
@@ -258,4 +263,15 @@ export class PostComponent implements OnInit {
       this.spinnerService.hide();
     }, 3000);
   }
+
+  getCurrentDateTimeLocal(): string {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = ('0' + (now.getMonth() + 1)).slice(-2);
+    const day = ('0' + now.getDate()).slice(-2);
+    const hours = ('0' + now.getHours()).slice(-2);
+    const minutes = ('0' + now.getMinutes()).slice(-2);
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  }
+
 }
