@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
+import { NotificationService } from 'src/shared/services/toastr.service';
 
 @Component({
   selector: 'app-post',
@@ -56,7 +57,7 @@ export class PostComponent implements OnInit {
     'land'
   ];
 
-  constructor(private fb: FormBuilder, private dataService: DataService) {}
+  constructor(private fb: FormBuilder, private dataService: DataService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     // Initialize the form with default values and validators for required fields.
@@ -224,5 +225,21 @@ export class PostComponent implements OnInit {
         amenitiesArray.push(new FormControl(amenity));
       });
     }
+  }
+
+  onShowSuccess() {
+    this.notificationService.showSuccess('Everything is working fine!', 'Success!');
+  }
+
+  onShowError() {
+    this.notificationService.showError('Something went wrong!', 'Error!');
+  }
+
+  onShowInfo() {
+    this.notificationService.showInfo('Here is some useful information.', 'Info');
+  }
+
+  onShowWarning() {
+    this.notificationService.showWarning('Be careful with this action!', 'Warning');
   }
 }
