@@ -7,6 +7,7 @@ import { MaterialModule } from '../shared/material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { SpinnerModule } from 'src/shared/spinner/spinner.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataService } from 'src/app/data.service';
+import { SpinnerService } from 'src/shared/services/spinner.service';
 import { NotificationService } from 'src/shared/services/toastr.service';
 
 @Component({
@@ -57,7 +58,7 @@ export class PostComponent implements OnInit {
     'land'
   ];
 
-  constructor(private fb: FormBuilder, private dataService: DataService, private notificationService: NotificationService) {}
+  constructor(private fb: FormBuilder, private dataService: DataService, private notificationService: NotificationService, private spinnerService: SpinnerService) {}
 
   ngOnInit(): void {
     // Initialize the form with default values and validators for required fields.
@@ -106,8 +107,10 @@ export class PostComponent implements OnInit {
 
   postDataAndPatchForm(): void {
     const payload = {}; // Existing payload for this function.
+    this.spinnerService.show();
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
       (response) => {
+        this.spinnerService.hide();
         this.patchForm(response);
         this.showForm = true;
       },
@@ -241,5 +244,14 @@ export class PostComponent implements OnInit {
 
   onShowWarning() {
     this.notificationService.showWarning('Be careful with this action!', 'Warning');
+  }
+
+  doAsyncTask(): void {
+    this.spinnerService.show();
+
+    // Simulate an async operation (e.g., HTTP request)
+    setTimeout(() => {
+      this.spinnerService.hide();
+    }, 3000);
   }
 }

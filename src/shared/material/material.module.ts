@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -43,7 +44,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatDatepickerModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
 
   ],
   exports: [
@@ -64,7 +66,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     MatDatepickerModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }
