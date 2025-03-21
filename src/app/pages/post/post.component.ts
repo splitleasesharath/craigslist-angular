@@ -111,10 +111,12 @@ export class PostComponent implements OnInit {
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
       (response) => {
         this.spinnerService.hide();
+        this.notificationService.showSuccess('Data generaed successfully', 'Success!');
         this.patchForm(response);
         this.showForm = true;
       },
       (error) => {
+        this.notificationService.showError('Something went wrong!', error);
         console.error('Error posting data to backend:', error);
       }
     );
@@ -175,9 +177,11 @@ export class PostComponent implements OnInit {
     this.dataService.post<any>(this.newPostUrl, payload).subscribe(
       (response) => {
         console.log('New post successful:', response);
+        this.notificationService.showSuccess('Post created successfully', 'Success!');
         // You can perform further actions here if needed.
       },
       (error) => {
+        this.notificationService.showError('Something went wrong!', error);
         console.error('Error creating new post:', error);
       }
     );
