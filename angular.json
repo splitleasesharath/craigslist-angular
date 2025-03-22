@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MPOSupplier": {
+    "SplitLease": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/mposupplier",
+            "outputPath": "dist/splitlease",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MPOSupplier:build:production"
+              "browserTarget": "SplitLease:build:production"
             },
             "development": {
-              "browserTarget": "MPOSupplier:build:development"
+              "browserTarget": "SplitLease:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MPOSupplier:build"
+            "browserTarget": "SplitLease:build"
           }
         },
         "test": {
