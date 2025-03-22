@@ -1,1 +1,47 @@
-<p>re-post works!</p>
+<div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
+    <h2 class="text-xl font-semibold mb-4">Listing Details</h2>
+  
+    <!-- Form is hidden until API response is received -->
+    <form [formGroup]="listingForm">
+  
+      <!-- Schedule Post Section with styling and separator -->
+      <div class="mb-6">
+        <div class="flex items-center justify-start">
+          <div>
+            <h3 class="text-lg font-medium text-blue-600">Schedule Post</h3>
+            <p class="text-sm text-gray-600">Select the date and time for when you want the post to be published.</p>
+          </div>
+          <div class="w-1/4 ml-4">
+            <mat-form-field class="w-full">
+              <mat-label>Date &amp; Time</mat-label>
+              <input matInput formControlName="dateTime" type="datetime-local" [min]="minDate">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Section: Basic Information -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <mat-form-field class="w-full">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <!-- Title spans full row -->
+        <mat-form-field class="w-full md:col-span-2">
+          <mat-label>Link</mat-label>
+          <input matInput formControlName="link">
+        </mat-form-field>
+
+      </div>
+      
+    </form>
+  
+    <button mat-raised-button color="primary" (click)="createNewPost()" [disabled]="listingForm.invalid">
+      create New Post
+    </button>
+  
+  </div>
