@@ -13,6 +13,9 @@
   <!-- Button to generate data -->
   <button mat-raised-button color="primary" (click)="postDataAndPatchForm()" *ngIf="!showForm">
     Generate Data
+  </button> &nbsp;
+  <button mat-raised-button color="primary" (click)="postDataAndPatchFormNest()" *ngIf="!showForm">
+    Generate nest Data
   </button>
 
   <!-- Form is hidden until API response is received -->

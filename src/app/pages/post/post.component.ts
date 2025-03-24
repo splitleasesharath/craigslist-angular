@@ -17,6 +17,7 @@ export class PostComponent implements OnInit {
 
   // Existing endpoint for postDataAndPatchForm remains unchanged.
   private apiUrl = 'http://localhost:3000/flask/create_craigslist';
+  private apiUrlNest = 'http://localhost:3000/openai/create_craigslist';
   // New endpoint for the new post call.
   private newPostUrl = 'http://localhost:3000/post/create';
 
@@ -65,7 +66,7 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.minDate = this.getCurrentDateTimeLocal();
-    
+
     // Initialize the form with default values and validators for required fields.
     this.listingForm = this.fb.group({
       email: ['fhallock44@gmail.com'],
@@ -114,6 +115,23 @@ export class PostComponent implements OnInit {
     const payload = {}; // Existing payload for this function.
     this.spinnerService.show();
     this.dataService.post<any>(this.apiUrl, payload).subscribe(
+      (response) => {
+        this.spinnerService.hide();
+        this.notificationService.showSuccess('Data generaed successfully', 'Success!');
+        this.patchForm(response);
+        this.showForm = true;
+      },
+      (error) => {
+        this.notificationService.showError('Something went wrong!', error);
+        console.error('Error posting data to backend:', error);
+      }
+    );
+  }
+
+  postDataAndPatchFormNest(): void {
+    const payload = {}; // Existing payload for this function.
+    this.spinnerService.show();
+    this.dataService.post<any>(this.apiUrlNest, payload).subscribe(
       (response) => {
         this.spinnerService.hide();
         this.notificationService.showSuccess('Data generaed successfully', 'Success!');
@@ -238,6 +256,54 @@ export class PostComponent implements OnInit {
       });
     }
   }
+
+  patchFormNest(apiResponse: any): void {
+    // Determine category value: use API value if available, else pick a random one.
+    const categoryFromApi = apiResponse.listing_details?.Category;
+    const categoryValue = categoryFromApi ? categoryFromApi : this.getRandomCategory();
+  
+    // Patch the main form controls using both top-level and nested objects.
+    this.listingForm.patchValue({
+      title: apiResponse.title || apiResponse.listing_details?.Title,
+      description: apiResponse.description || apiResponse.listing_details?.Description,
+      price: apiResponse.additional_suggestions?.price || apiResponse.listing_details?.Price,
+      location: apiResponse.additional_suggestions?.location || apiResponse.listing_details?.Location,
+      bathrooms: apiResponse.additional_suggestions?.bathrooms || apiResponse.listing_details?.Bathrooms,
+      bedrooms: apiResponse.additional_suggestions?.bedrooms || apiResponse.listing_details?.Bedrooms,
+      borough: apiResponse.listing_details?.Borough,
+      zipcode: apiResponse.listing_details?.Zip,
+      category: categoryValue,
+      sqft: apiResponse.listing_details?.Sqft,
+      apt_type: apiResponse.listing_details?.["Housing Type"],
+      laundry: apiResponse.listing_details?.Laundry,
+      parking: apiResponse.listing_details?.Parking,
+      pets_cat: apiResponse.listing_details?.Cats,
+      pets_dog: apiResponse.listing_details?.Dogs,
+      is_furnished: apiResponse.listing_details?.Furnished,
+      no_smoking: apiResponse.listing_details?.["No Smoking"],
+      wheelchaccess: apiResponse.listing_details?.["Wheelchair accessible"],
+      airconditioning: apiResponse.listing_details?.["Air conditioning"],
+      ev_charging: apiResponse.listing_details?.["EV charging"],
+      available_on: apiResponse.listing_details?.["Available On"],
+      street: apiResponse.listing_details?.Street,
+      city: apiResponse.listing_details?.City,
+      private_room: !!apiResponse.listing_details?.["Private Room"],
+      private_bath: !!apiResponse.listing_details?.["Private Bath"]
+    });
+  
+    // Patch the amenities FormArray from additional_suggestions.amenities.
+    const amenitiesArray = this.listingForm.get('amenities') as FormArray;
+    amenitiesArray.clear();
+    if (
+      apiResponse.additional_suggestions?.amenities &&
+      Array.isArray(apiResponse.additional_suggestions.amenities)
+    ) {
+      apiResponse.additional_suggestions.amenities.forEach((amenity: string) => {
+        amenitiesArray.push(new FormControl(amenity));
+      });
+    }
+  }
+  
 
   onShowSuccess() {
     this.notificationService.showSuccess('Everything is working fine!', 'Success!');
