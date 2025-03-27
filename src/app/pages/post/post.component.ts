@@ -101,6 +101,7 @@ export class PostComponent implements OnInit {
       private_room: [false, Validators.required],
       private_bath: [false, Validators.required],
       useCopyPaste: [false],
+      useMixedDescription: [false],
       dateTime: [''],
       amenities: this.fb.array([])
     });
@@ -185,7 +186,8 @@ export class PostComponent implements OnInit {
       rent_period: formValues.rent_period,
       private_room: formValues.private_room ? 1 : 0,
       private_bath: formValues.private_bath ? 1 : 0,
-      useCopyPaste: formValues.useCopyPaste
+      useCopyPaste: formValues.useCopyPaste,
+      useMixedDescription: formValues.useMixedDescription
     };
 
     if (formValues.dateTime){
