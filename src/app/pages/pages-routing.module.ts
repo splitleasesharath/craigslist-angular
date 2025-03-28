@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'renew', loadChildren: () => import('./re-new/re-new.module').then(m => m.ReNewModule) },
       { path: 'item', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule) },
       { path: 'report', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
+      { path: 'listing', loadChildren: () => import('./listing/listing.module').then(m => m.ListingModule) },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

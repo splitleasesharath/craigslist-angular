@@ -17,4 +17,12 @@ export class DataService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<T>(url, payload, { headers });
   }
+
+    /**
+   * Generic GET method that accepts a URL.
+   * @param url The endpoint URL.
+   */
+    get<T>(url: string): Observable<T> {
+      return this.http.get<T>(url);
+    }
 }

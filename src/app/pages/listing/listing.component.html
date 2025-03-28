@@ -1,0 +1,35 @@
+<!-- src/app/listing/listing.component.html -->
+<ngx-datatable tableClass="table table-striped table-bordered table-hover" 
+  [tableId]="'checkboxWithRowDetail'" 
+  [data]="dataWithRowDetail" 
+  [options]="optionsWithRowDetail" 
+  [columns]="columnsWithRowDetail" 
+  (checkboxClick)="onCheckboxClick($event)">
+
+  <ngx-caption>
+    <div class="row">
+      <div class="col-sm-12 col-xs-12 col-12">
+        <b>
+          <i class="fa fa-table" aria-hidden="true"></i>
+          Basic Data Table List
+        </b>
+      </div>
+    </div>
+  </ngx-caption>
+
+  <ng-template #rowDetailTpl let-row let-rowIndex="rowIndex">
+      <h3>{{ row.Name }}</h3>
+      <p>
+        Guests: {{ row["Features - Qty Guests"] }},
+        Bedrooms: {{ row["Features - Qty Bedrooms"] }},
+        Beds: {{ row["Features - Qty Beds"] }},
+        Bathrooms: {{ row["Features - Qty Bathrooms"] }}
+      </p>
+      <p>
+        State: {{ row["Location - State"] }},
+        Damage Deposit: {{ row["💰Damage Deposit"] }},
+        Cleaning Fee: {{ row["💰Cleaning Cost / Maintenance Fee"] }},
+        Rental Type: {{ row["rental type"] }}
+      </p>
+  </ng-template>
+</ngx-datatable>
