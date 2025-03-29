@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.css';
+
+
 // html, body {
 //   height: 100vh;
 //   margin: 0;

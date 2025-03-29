@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ItemsComponent } from './items.component';
 import { ItemsRoutingModule } from './items-routing.module';
 import { ItemsListComponent } from './items-list/items-list.component';
-import { NgxDatatableModule } from '@tusharghoshbd/ngx-datatable';
+// import { NgxDatatableModule } from '@tusharghoshbd/ngx-datatable';
 import { AppService } from './items-list/app.service';
 import { DetailScreenComponent } from './detail-screen/detail-screen.component';
 import { MaterialModule } from 'src/shared/material/material.module';
@@ -19,7 +19,7 @@ import { MaterialModule } from 'src/shared/material/material.module';
   imports: [
     CommonModule,
     ItemsRoutingModule,
-    NgxDatatableModule,
+    // NgxDatatableModule,
     MaterialModule
   ],
   providers: [AppService]

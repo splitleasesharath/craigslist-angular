@@ -8,50 +8,44 @@ import { DataService } from 'src/app/data.service';
   styleUrls: ['./listing.component.scss']
 })
 export class ListingComponent implements OnInit {
-  dataWithRowDetail: any[] = [];
-  optionsWithRowDetail: any;
-  columnsWithRowDetail: any[];
+  // For the official ngx-datatable, we use "rows" instead of "data"
+  rows: any[] = [];
+  // Define columns as an array of objects with "name" and "prop"
+  columns: Array<{ name: string; prop: string }> = [];
+  options: any;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // Configure any ngx-datatable options if needed.
-    this.optionsWithRowDetail = {
-      // Example options: rowHeight: 50, headerHeight: 50, etc.
+    this.options = {
+      // You can add options like rowHeight, headerHeight, etc.
+      headerHeight: 50,
+      rowHeight: 50
     };
 
-    // Define columns mapping to your listing object's properties.
-    this.columnsWithRowDetail = [
-      { prop: 'Name', name: 'Name' },
-      { prop: 'Features - Qty Guests', name: 'Guests' },
-      { prop: 'Features - Qty Bedrooms', name: 'Bedrooms' },
-      { prop: 'Features - Qty Beds', name: 'Beds' },
-      { prop: 'Features - Qty Bathrooms', name: 'Bathrooms' },
-      { prop: 'Location - State', name: 'State' },
-      { prop: '💰Damage Deposit', name: 'Damage Deposit' },
-      { prop: '💰Cleaning Cost / Maintenance Fee', name: 'Cleaning Fee' },
-      { prop: 'rental type', name: 'Rental Type' }
-    ];
-
-    // Fetch listings from your API.
     this.fetchListings();
   }
 
   fetchListings(): void {
-    // Adjust the URL to your NestJS endpoint that returns listings.
+    // Replace with your NestJS endpoint URL
     this.dataService.get<any>('http://localhost:3000/listings').subscribe({
       next: (data) => {
-        // In this example, we assume the API returns an array of listings.
-        // If your API returns an object with a property (like response.results), adjust accordingly.
-        this.dataWithRowDetail = Array.isArray(data) ? data : data.response?.results || [];
+        // If API returns a single object instead of an array, wrap it in an array.
+        const result = Array.isArray(data) ? data : data.response?.results || [data];
+        this.rows = result;
+
+        if (this.rows.length > 0) {
+          // Dynamically create column definitions from the keys of the first object.
+          const firstItem = this.rows[0];
+          this.columns = Object.keys(firstItem).map(key => ({
+            name: key,
+            prop: key
+          }));
+        }
       },
       error: (error) => {
         console.error('Error fetching listings:', error);
       }
     });
-  }
-
-  onCheckboxClick(event: any): void {
-    console.log('Checkbox clicked:', event);
   }
 }
