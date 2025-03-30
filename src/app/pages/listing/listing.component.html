@@ -1,13 +1,13 @@
 <div class="p-4 mb-1 bg-white rounded shadow-lg flex justify-end items-center h-[70px] space-x-2 border-t border-gray-300">
-  <!-- <button mat-raised-button color="warn"  (click)="onAction()">Close</button> -->
-  <button mat-raised-button color="primary"  (click)="onAction()">View</button>
+  <!-- <button mat-raised-button color="warn" (click)="onAction()">Close</button> -->
+  <button mat-raised-button color="primary" (click)="onAction()">View</button>
 </div>
 
 <!-- Table Container -->
 <div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
   <ngx-datatable 
     class="bootstrap"
-    [rows]="rows"
+    [rows]="mappedRows"
     [scrollbarV]="true"
     [headerHeight]="50"
     [rowHeight]="50"
@@ -32,81 +32,75 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <!-- Column 1: Name -->
-    <ngx-datatable-column name="Name" prop="Name" [width]="300">
+    <!-- Column 1: Title -->
+    <ngx-datatable-column name="Title" prop="title" [width]="300">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Name"] }}
+        {{ row.title }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 2: Description -->
-    <ngx-datatable-column name="Description" prop="Description" [width]="500">
+    <ngx-datatable-column name="Description" prop="description" [width]="500">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Description"] | slice:0:100 }}...
+        {{ row.description | slice:0:100 }}...
       </ng-template>
     </ngx-datatable-column>
 
-    <!-- Column 3: Host Name -->
-    <ngx-datatable-column name="Host Name" prop="host name">
+    <!-- Column 3: Email -->
+    <ngx-datatable-column name="Email" prop="email">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["host name"] }}
+        {{ row.email }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 4: Zip Code -->
-    <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
+    <ngx-datatable-column name="Zip Code" prop="zipcode">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Location - Zip Code"] }}
+        {{ row.zipcode }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 5: State -->
-    <ngx-datatable-column name="State" prop="Location - State">
+    <ngx-datatable-column name="State" prop="state">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Location - State"] }}
+        {{ row.state }}
       </ng-template>
     </ngx-datatable-column>
 
-  <!-- <ngx-datatable-column name="City" prop="Location - City">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Location - City"] }}
-    </ng-template>
-  </ngx-datatable-column> -->
-
-
-    <ngx-datatable-column name="Bedrooms" prop="Features - Qty Bedrooms">
+    <!-- Column 6: Bedrooms -->
+    <ngx-datatable-column name="Bedrooms" prop="bedrooms">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Features - Qty Bedrooms"] }}
+        {{ row.bedrooms }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 7: Bathrooms -->
-    <ngx-datatable-column name="Bathrooms" prop="Features - Qty Bathrooms">
+    <ngx-datatable-column name="Bathrooms" prop="bathrooms">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Features - Qty Bathrooms"] }}
+        {{ row.bathrooms }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 8: SQFT Area -->
-    <ngx-datatable-column name="SQFT Area" prop="Features - SQFT Area">
+    <ngx-datatable-column name="SQFT Area" prop="sqft">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["Features - SQFT Area"] }}
+        {{ row.sqft }}
       </ng-template>
     </ngx-datatable-column>
 
-    <!-- Column 9: Price Override -->
-    <ngx-datatable-column name="Price Override" prop="💰Price Override">
+    <!-- Column 9: Price -->
+    <ngx-datatable-column name="Price" prop="price">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["💰Price Override"] }}
+        {{ row.price }}
       </ng-template>
     </ngx-datatable-column>
 
     <!-- Column 10: Rental Type -->
-    <ngx-datatable-column name="Rental Type" prop="rental type">
+    <ngx-datatable-column name="Rental Type" prop="rentalType">
       <ng-template ngx-datatable-cell-template let-row="row">
-        {{ row["rental type"] }}
+        {{ row.rentalType }}
       </ng-template>
     </ngx-datatable-column>
-  
+
   </ngx-datatable>
 </div>

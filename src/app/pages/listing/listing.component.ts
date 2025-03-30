@@ -13,12 +13,15 @@ import { ListingViewComponent } from './listing-view/listing-view.component';
 })
 export class ListingComponent implements OnInit {
   rows: any[] = [];
+  mappedRows: any[] = [];
   selected: any[] = [];
-  // Expose the SelectionType enum to use in the template
   SelectionType = SelectionType;
 
-  constructor(private dataService: DataService,private router: Router,
-       public dialog: MatDialog) {}
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.fetchListing();
@@ -29,6 +32,22 @@ export class ListingComponent implements OnInit {
       next: data => {
         // Assuming data.response.results contains the array
         this.rows = data?.response?.results || [];
+        // Map the API response to the sample keys
+        this.mappedRows = this.rows
+          .map(row => ({
+            title: row["Name"],
+            description: row["Description"],
+            // Mapping host name could be used if you want to use email info, adjust as needed:
+            email: row["host name"],
+            zipcode: row["Location - Zip Code"],
+            state: row["Location - State"], // Assuming state maps to state from sample
+            bedrooms: row["Features - Qty Bedrooms"],
+            bathrooms: row["Features - Qty Bathrooms"],
+            sqft: row["Features - SQFT Area"],
+            price: row["💰Price Override"],
+            rentalType: row["rental type"]
+          }))
+
       },
       error: error => {
         console.error('Error fetching listings:', error);
@@ -38,13 +57,11 @@ export class ListingComponent implements OnInit {
 
   onSelect(event: any): void {
     console.log('Selection changed:', event);
-    // The selected array is automatically updated via [selected] binding
   }
   
   onAction(): void {
     console.log('Performing action on selected rows:', this.selected);
-    this.openDialog()
-    // Implement your action logic here
+    this.openDialog();
   }
 
   isSelected(row: any): boolean {
@@ -53,7 +70,6 @@ export class ListingComponent implements OnInit {
 
   toggleSelect(row: any, event: any): void {
     if (event.target.checked) {
-      // Add row if not already present
       if (!this.isSelected(row)) {
         this.selected.push(row);
       }
@@ -72,18 +88,15 @@ export class ListingComponent implements OnInit {
 
   toggleSelectAll(event: any): void {
     if (event.target.checked) {
-      // Select all rows
       this.selected = [...this.rows];
     } else {
-      // Clear selection
       this.selected = [];
     }
     console.log('Select all toggled. Current selection:', this.selected);
   }
   
   openDialog(): void {
-
-    console.log(this.selected)
+    console.log(this.selected);
     this.dialog.open(ListingViewComponent, {
       width: '80vw',
       data: { name: 'Your Name' },
