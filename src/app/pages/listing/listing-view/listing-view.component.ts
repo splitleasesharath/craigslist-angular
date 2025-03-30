@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DataService } from 'src/app/data.service';
 import { SpinnerService } from 'src/shared/services/spinner.service';
 import { NotificationService } from 'src/shared/services/toastr.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-listing-view',
@@ -15,6 +16,7 @@ export class ListingViewComponent implements OnInit {
   listingForm: FormGroup;
   showForm: boolean = false;
   minDate!: string;
+  listingId : string = '';
 
   laundryOptions: string[] = [
     'w/d in unit',
@@ -57,53 +59,82 @@ export class ListingViewComponent implements OnInit {
   ];
 
   constructor(private fb: FormBuilder, private dataService: DataService, private notificationService: NotificationService,
-     private spinnerService: SpinnerService, public dialogRef: MatDialogRef<ListingViewComponent>) { }
+     private spinnerService: SpinnerService, public dialogRef: MatDialogRef<ListingViewComponent>,
+     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
       this.minDate = this.getCurrentDateTimeLocal();
+
+      this.initForm();
+
+      // Patch the form with the selected row data if available.
+      if (this.data && this.data.selectedRow) {
+        this.listingForm.patchValue({
+          title: this.data.selectedRow.title,
+          description: this.data.selectedRow.description,
+          email: this.data.selectedRow.email,
+          zipcode: this.data.selectedRow.zipcode,
+          state: this.data.selectedRow.state,
+          bedrooms: this.data.selectedRow.bedrooms,
+          bathrooms: this.data.selectedRow.bathrooms,
+          sqft: this.data.selectedRow.sqft,
+          price: this.data.selectedRow.price,
+          rentalType: this.data.selectedRow.rentalType,
+          
+        });
+
+        this.listingId =  this.data.selectedRow.id
+
+        console.log('listing id==>',  this.listingId)
+      }
   
       // Initialize the form with default values and validators for required fields.
-      this.listingForm = this.fb.group({
-        email: ['fhallock44@gmail.com'],
-        password: ['eCom2021!'],
-        title: ['', Validators.required],
-        description: ['', Validators.required],
-        price: [''],
-        borough: [''],
-        zipcode: ['', Validators.required],
-        category: [''],
-        location: [''],
-        sqft: [''],
-        rent: [''],
-        rent_period: [''],
-        apt_type: [''],
-        bedrooms: [''],
-        bathrooms: [''],
-        amenity_laundry: [''],
-        amenity_parking: [''],
-        laundry: ['', Validators.required],
-        parking: ['', Validators.required],
-        pets_cat: [false],
-        pets_dog: [false],
-        is_furnished: [false],
-        no_smoking: [false],
-        wheelchaccess: [false],
-        airconditioning: [false],
-        ev_charging: [false],
-        available_on: [''],
-        street: [''],
-        city: [''],
-        private_room: [false, Validators.required],
-        private_bath: [false, Validators.required],
-        useCopyPaste: [false],
-        useMixedDescription: [false],
-        dateTime: [''],
-        amenities: this.fb.array([])
-      });
+      
     }
   closeDialog(): void {
     this.dialogRef.close();
   }
+
+  initForm(){
+    this.listingForm = this.fb.group({
+      email: ['fhallock44@gmail.com'],
+      password: ['eCom2021!'],
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+      price: [''],
+      borough: [''],
+      zipcode: ['', Validators.required],
+      category: [''],
+      location: [''],
+      sqft: [''],
+      rent: [''],
+      rent_period: [''],
+      apt_type: [''],
+      bedrooms: [''],
+      bathrooms: [''],
+      amenity_laundry: [''],
+      amenity_parking: [''],
+      laundry: ['', Validators.required],
+      parking: ['', Validators.required],
+      pets_cat: [false],
+      pets_dog: [false],
+      is_furnished: [false],
+      no_smoking: [false],
+      wheelchaccess: [false],
+      airconditioning: [false],
+      ev_charging: [false],
+      available_on: [''],
+      street: [''],
+      city: [''],
+      private_room: [false, Validators.required],
+      private_bath: [false, Validators.required],
+      useCopyPaste: [false],
+      useMixedDescription: [false],
+      dateTime: [''],
+      amenities: this.fb.array([])
+    });
+  }
+
   getCurrentDateTimeLocal(): string {
     const now = new Date();
     const year = now.getFullYear();

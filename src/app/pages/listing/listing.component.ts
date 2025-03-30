@@ -43,7 +43,10 @@ export class ListingComponent implements OnInit {
           bathrooms: row["Features - Qty Bathrooms"],
           sqft: row["Features - SQFT Area"],
           price: row["💰Price Override"],
-          rentalType: row["rental type"]
+          rentalType: row["rental type"],
+          id: row["_id"],
+          // ...row
+
         }));
       },
       error: error => {
@@ -117,12 +120,17 @@ export class ListingComponent implements OnInit {
     console.log('Select all toggled. Current selection:', this.selected);
   }
   
+
   openDialog(): void {
-    console.log(this.selected);
-    this.dialog.open(ListingViewComponent, {
-      width: '80vw',
-      data: { name: 'Your Name' },
-      panelClass: 'no-padding-dialog'
-    });
+    if (this.selected && this.selected.length) {
+      const selectedRow = this.selected[0];
+      this.dialog.open(ListingViewComponent, {
+        width: '80vw',
+        data: { selectedRow },
+        panelClass: 'no-padding-dialog'
+      });
+    } else {
+      console.log('No row selected.');
+    }
   }
 }
