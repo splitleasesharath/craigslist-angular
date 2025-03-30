@@ -33,21 +33,18 @@ export class ListingComponent implements OnInit {
         // Assuming data.response.results contains the array
         this.rows = data?.response?.results || [];
         // Map the API response to the sample keys
-        this.mappedRows = this.rows
-          .map(row => ({
-            title: row["Name"],
-            description: row["Description"],
-            // Mapping host name could be used if you want to use email info, adjust as needed:
-            email: row["host name"],
-            zipcode: row["Location - Zip Code"],
-            state: row["Location - State"], // Assuming state maps to state from sample
-            bedrooms: row["Features - Qty Bedrooms"],
-            bathrooms: row["Features - Qty Bathrooms"],
-            sqft: row["Features - SQFT Area"],
-            price: row["💰Price Override"],
-            rentalType: row["rental type"]
-          }))
-
+        this.mappedRows = this.rows.map(row => ({
+          title: row["Name"],
+          description: row["Description"],
+          email: row["host name"],
+          zipcode: row["Location - Zip Code"],
+          state: row["Location - State"],
+          bedrooms: row["Features - Qty Bedrooms"],
+          bathrooms: row["Features - Qty Bathrooms"],
+          sqft: row["Features - SQFT Area"],
+          price: row["💰Price Override"],
+          rentalType: row["rental type"]
+        }));
       },
       error: error => {
         console.error('Error fetching listings:', error);
@@ -63,32 +60,57 @@ export class ListingComponent implements OnInit {
     console.log('Performing action on selected rows:', this.selected);
     this.openDialog();
   }
+  // isSelected(row: any): boolean {
+  //   return this.selected.indexOf(row) !== -1;
+  // }
+
+  // toggleSelect(row: any, event: any): void {
+  //   if (event.target.checked) {
+  //     if (!this.isSelected(row)) {
+  //       this.selected.push(row);
+  //     }
+  //   } else {
+  //     const index = this.selected.indexOf(row);
+  //     if (index !== -1) {
+  //       this.selected.splice(index, 1);
+  //     }
+  //   }
+  //   console.log('Current selection:', this.selected);
+  // }
+
+  // allSelected(): boolean {
+  //   return this.rows.length > 0 && this.selected.length === this.rows.length;
+  // }
+
+  // toggleSelectAll(event: any): void {
+  //   if (event.target.checked) {
+  //     this.selected = [...this.rows];
+  //   } else {
+  //     this.selected = [];
+  //   }
+  //   console.log('Select all toggled. Current selection:', this.selected);
+  // }
 
   isSelected(row: any): boolean {
-    return this.selected.indexOf(row) !== -1;
+    return this.selected.length > 0 && this.selected[0] === row;
   }
 
+  // Modified to allow only a single selection.
   toggleSelect(row: any, event: any): void {
     if (event.target.checked) {
-      if (!this.isSelected(row)) {
-        this.selected.push(row);
-      }
+      // Clear previous selection and set current row as the only selected row
+      this.selected = [row];
     } else {
-      const index = this.selected.indexOf(row);
-      if (index !== -1) {
-        this.selected.splice(index, 1);
-      }
+      this.selected = [];
     }
     console.log('Current selection:', this.selected);
   }
 
-  allSelected(): boolean {
-    return this.rows.length > 0 && this.selected.length === this.rows.length;
-  }
-
+  // Modified header checkbox logic for single selection:
+  // When checked, select the first row (if any); when unchecked, clear selection.
   toggleSelectAll(event: any): void {
-    if (event.target.checked) {
-      this.selected = [...this.rows];
+    if (event.target.checked && this.rows.length > 0) {
+      this.selected = [this.rows[0]];
     } else {
       this.selected = [];
     }

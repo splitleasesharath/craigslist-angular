@@ -25,7 +25,8 @@
       [resizeable]="false"
       [width]="50">
       <ng-template ngx-datatable-header-template>
-        <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allSelected()" />
+        <!-- <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allSelected()" /> -->
+        <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selected.length > 0" />
       </ng-template>
       <ng-template ngx-datatable-cell-template let-row="row">
         <input type="checkbox" (change)="toggleSelect(row, $event)" [checked]="isSelected(row)" />
