@@ -1,33 +1,83 @@
-<!-- src/app/listing/listing.component.html -->
-<ngx-datatable 
+<div class="p-4 bg-white rounded shadow-lg overflow-y-auto" style="height: 100%; background-color: red;">
+  <ngx-datatable
   class="bootstrap"
   [rows]="rows"
-  [columns]="columns"
-  [headerHeight]="options.headerHeight"
-  [scrollbarH]="true"
+  [scrollbarV]="true"
   [headerHeight]="50"
-  [footerHeight]="0"
-  [rowHeight]="options.rowHeight"
-  [footerHeight]="0">
+  [rowHeight]="50"
+  style="height:400px">
   
-  <ngx-datatable-footer *ngIf="false"></ngx-datatable-footer>
+  <!-- Column 1: Name -->
+  <ngx-datatable-column name="Name" prop="Name" [width]="300">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Name"] }}
+    </ng-template>
+  </ngx-datatable-column>
 
-  <!-- Optional: if you have a row detail template, you can include it here -->
-  <ng-template #rowDetailTpl let-row="row">
-    <div style="padding: 10px;">
-      <h3>{{ row.Name }}</h3>
-      <p>
-        Guests: {{ row["Features - Qty Guests"] }}, 
-        Bedrooms: {{ row["Features - Qty Bedrooms"] }}, 
-        Beds: {{ row["Features - Qty Beds"] }}, 
-        Bathrooms: {{ row["Features - Qty Bathrooms"] }}
-      </p>
-      <p>
-        State: {{ row["Location - State"] }}, 
-        Damage Deposit: {{ row["💰Damage Deposit"] }}, 
-        Cleaning Fee: {{ row["💰Cleaning Cost / Maintenance Fee"] }}, 
-        Rental Type: {{ row["rental type"] }}
-      </p>
-    </div>
-  </ng-template>
+  <ngx-datatable-column name="Description" prop="Description" [width]="500">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Description"] | slice:0:100 }}...
+    </ng-template>
+  </ngx-datatable-column>
+
+  <ngx-datatable-column name="Host Name" prop="host name">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["host name"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+
+  <!-- Column 2: State -->
+  <ngx-datatable-column name="State" prop="Location - State">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Location - State"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Column 3: Zip Code -->
+  <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Location - Zip Code"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Column 4: Bedrooms -->
+  <ngx-datatable-column name="Bedrooms" prop="Features - Qty Bedrooms">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Features - Qty Bedrooms"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Column 5: Bathrooms -->
+  <ngx-datatable-column name="Bathrooms" prop="Features - Qty Bathrooms">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Features - Qty Bathrooms"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Column 6: SQFT Area -->
+  <ngx-datatable-column name="SQFT Area" prop="Features - SQFT Area">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Features - SQFT Area"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+  <!-- Column 7: Price Override -->
+  <ngx-datatable-column name="Price Override" prop="💰Price Override">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["💰Price Override"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
+
+  <!-- Column 10: Rental Type -->
+  <ngx-datatable-column name="Rental Type" prop="rental type">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["rental type"] }}
+    </ng-template>
+  </ngx-datatable-column>
+  
 </ngx-datatable>
+
+</div>
+
