@@ -1,45 +1,71 @@
-<div class="p-4 bg-white rounded shadow-lg overflow-y-auto" style="height: 100%; background-color: red;">
-  <ngx-datatable
-  class="bootstrap"
-  [rows]="rows"
-  [scrollbarV]="true"
-  [headerHeight]="50"
-  [rowHeight]="50"
-  style="height:400px">
-  
-  <!-- Column 1: Name -->
-  <ngx-datatable-column name="Name" prop="Name" [width]="300">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Name"] }}
-    </ng-template>
-  </ngx-datatable-column>
+<div class="p-4 mb-1 bg-white rounded shadow-lg flex justify-end items-center h-[70px] space-x-2 border-t border-gray-300">
+  <!-- <button mat-raised-button color="warn"  (click)="onAction()">Close</button> -->
+  <button mat-raised-button color="primary"  (click)="onAction()">View</button>
+</div>
 
-  <ngx-datatable-column name="Description" prop="Description" [width]="500">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Description"] | slice:0:100 }}...
-    </ng-template>
-  </ngx-datatable-column>
+<!-- Table Container -->
+<div class="p-4 bg-white rounded shadow-lg overflow-y-auto">
+  <ngx-datatable 
+    class="bootstrap"
+    [rows]="rows"
+    [scrollbarV]="true"
+    [headerHeight]="50"
+    [rowHeight]="50"
+    style="height:400px"
+    [selectionType]="SelectionType.checkbox"
+    [selected]="selected"
+    (select)="onSelect($event)">
+    
+    <!-- Checkbox Column -->
+    <ngx-datatable-column
+      name="Select"
+      [sortable]="false"
+      [canAutoResize]="false"
+      [draggable]="false"
+      [resizeable]="false"
+      [width]="50">
+      <ng-template ngx-datatable-header-template>
+        <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="allSelected()" />
+      </ng-template>
+      <ng-template ngx-datatable-cell-template let-row="row">
+        <input type="checkbox" (change)="toggleSelect(row, $event)" [checked]="isSelected(row)" />
+      </ng-template>
+    </ngx-datatable-column>
 
-  <ngx-datatable-column name="Host Name" prop="host name">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["host name"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 1: Name -->
+    <ngx-datatable-column name="Name" prop="Name" [width]="300">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Name"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
-    <!-- Column 3: Zip Code -->
-  <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Location - Zip Code"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 2: Description -->
+    <ngx-datatable-column name="Description" prop="Description" [width]="500">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Description"] | slice:0:100 }}...
+      </ng-template>
+    </ngx-datatable-column>
 
+    <!-- Column 3: Host Name -->
+    <ngx-datatable-column name="Host Name" prop="host name">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["host name"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <!-- Column 2: State -->
-  <ngx-datatable-column name="State" prop="Location - State">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Location - State"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 4: Zip Code -->
+    <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Location - Zip Code"] }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <!-- Column 5: State -->
+    <ngx-datatable-column name="State" prop="Location - State">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Location - State"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
   <!-- <ngx-datatable-column name="City" prop="Location - City">
     <ng-template ngx-datatable-cell-template let-row="row">
@@ -47,43 +73,40 @@
     </ng-template>
   </ngx-datatable-column> -->
 
-  <!-- Column 4: Bedrooms -->
-  <ngx-datatable-column name="Bedrooms" prop="Features - Qty Bedrooms">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Features - Qty Bedrooms"] }}
-    </ng-template>
-  </ngx-datatable-column>
 
-  <!-- Column 5: Bathrooms -->
-  <ngx-datatable-column name="Bathrooms" prop="Features - Qty Bathrooms">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Features - Qty Bathrooms"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <ngx-datatable-column name="Bedrooms" prop="Features - Qty Bedrooms">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Features - Qty Bedrooms"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <!-- Column 6: SQFT Area -->
-  <ngx-datatable-column name="SQFT Area" prop="Features - SQFT Area">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Features - SQFT Area"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 7: Bathrooms -->
+    <ngx-datatable-column name="Bathrooms" prop="Features - Qty Bathrooms">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Features - Qty Bathrooms"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <!-- Column 7: Price Override -->
-  <ngx-datatable-column name="Price Override" prop="💰Price Override">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["💰Price Override"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 8: SQFT Area -->
+    <ngx-datatable-column name="SQFT Area" prop="Features - SQFT Area">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["Features - SQFT Area"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
+    <!-- Column 9: Price Override -->
+    <ngx-datatable-column name="Price Override" prop="💰Price Override">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["💰Price Override"] }}
+      </ng-template>
+    </ngx-datatable-column>
 
-  <!-- Column 10: Rental Type -->
-  <ngx-datatable-column name="Rental Type" prop="rental type">
-    <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["rental type"] }}
-    </ng-template>
-  </ngx-datatable-column>
+    <!-- Column 10: Rental Type -->
+    <ngx-datatable-column name="Rental Type" prop="rental type">
+      <ng-template ngx-datatable-cell-template let-row="row">
+        {{ row["rental type"] }}
+      </ng-template>
+    </ngx-datatable-column>
   
-</ngx-datatable>
-
+  </ngx-datatable>
 </div>
-
