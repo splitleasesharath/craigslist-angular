@@ -6,6 +6,147 @@
       </div>
     </div>
     <div class="content-container flex-1 overflow-y-auto p-4">
+
+        <form [formGroup]="listingForm" >
+
+            <!-- Schedule Post Section with styling and separator -->
+            <div class="mb-6">
+              <div class="flex items-center justify-start">
+                <div>
+                  <h3 class="text-lg font-medium text-blue-600">Schedule Post</h3>
+                  <p class="text-sm text-gray-600">Select the date and time for when you want the post to be published.</p>
+                </div>
+                <div class="w-1/4 ml-4">
+                  <mat-form-field class="w-full">
+                    <mat-label>Date &amp; Time</mat-label>
+                    <input matInput formControlName="dateTime" type="datetime-local" [min]="minDate">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+        
+            <!-- Section: Basic Information -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" type="password">
+              </mat-form-field>
+              <!-- Title spans full row -->
+              <mat-form-field class="w-full md:col-span-2">
+                <mat-label>Title</mat-label>
+                <input matInput formControlName="title">
+              </mat-form-field>
+              <!-- Description spans full row -->
+              <mat-form-field class="w-full md:col-span-2">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description" rows="5"></textarea>
+              </mat-form-field>
+            </div>
+        
+            <!-- Section: Property Details -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+              <mat-form-field class="w-full">
+                <mat-label>Price</mat-label>
+                <input matInput formControlName="price">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Borough</mat-label>
+                <input matInput formControlName="borough">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Zip Code</mat-label>
+                <input matInput formControlName="zipcode">
+              </mat-form-field>
+              <!-- Updated Category Dropdown -->
+              <mat-form-field class="w-full">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="category">
+                  <mat-option *ngFor="let option of categoryOptions" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Location</mat-label>
+                <input matInput formControlName="location">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Square Footage</mat-label>
+                <input matInput formControlName="sqft">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Rent</mat-label>
+                <input matInput formControlName="rent">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Rent Period</mat-label>
+                <input matInput formControlName="rent_period">
+              </mat-form-field>
+        
+              <mat-form-field class="w-full">
+                <mat-label>Apartment Type</mat-label>
+                <mat-select formControlName="apt_type">
+                  <mat-option *ngFor="let option of aptTypeOptions" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+        
+              <mat-form-field class="w-full">
+                <mat-label>Bedrooms</mat-label>
+                <input matInput formControlName="bedrooms">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Bathrooms</mat-label>
+                <input matInput formControlName="bathrooms">
+              </mat-form-field>
+              <!-- Updated Dropdown for Laundry -->
+              <mat-form-field class="w-full">
+                <mat-label>Building Laundry</mat-label>
+                <mat-select formControlName="laundry">
+                  <mat-option *ngFor="let option of laundryOptions" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- Updated Dropdown for Parking -->
+              <mat-form-field class="w-full">
+                <mat-label>Property Parking</mat-label>
+                <mat-select formControlName="parking">
+                  <mat-option *ngFor="let option of parkingOptions" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>Street</mat-label>
+                <input matInput formControlName="street">
+              </mat-form-field>
+              <mat-form-field class="w-full">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city">
+              </mat-form-field>
+            </div>
+        
+            <!-- Section: Boolean Features (Checkboxes) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+              <mat-checkbox formControlName="pets_cat">Pets (Cat)</mat-checkbox>
+              <mat-checkbox formControlName="pets_dog">Pets (Dog)</mat-checkbox>
+              <mat-checkbox formControlName="is_furnished">Furnished</mat-checkbox>
+              <mat-checkbox formControlName="no_smoking">No Smoking</mat-checkbox>
+              <mat-checkbox formControlName="wheelchaccess">Wheelchair Access</mat-checkbox>
+              <mat-checkbox formControlName="airconditioning">Air Conditioning</mat-checkbox>
+              <mat-checkbox formControlName="ev_charging">EV Charging</mat-checkbox>
+              <mat-checkbox formControlName="private_room">Private Room</mat-checkbox>
+              <mat-checkbox formControlName="private_bath">Private Bath</mat-checkbox>
+              <mat-checkbox formControlName="useCopyPaste">Paste Content</mat-checkbox>
+              <mat-checkbox formControlName="useMixedDescription">Partial Paste Content</mat-checkbox>
+            </div>
+          </form>
       <!-- Content here -->
       
   
