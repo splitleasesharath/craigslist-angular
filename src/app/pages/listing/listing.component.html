@@ -26,6 +26,13 @@
     </ng-template>
   </ngx-datatable-column>
 
+    <!-- Column 3: Zip Code -->
+  <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
+    <ng-template ngx-datatable-cell-template let-row="row">
+      {{ row["Location - Zip Code"] }}
+    </ng-template>
+  </ngx-datatable-column>
+
 
   <!-- Column 2: State -->
   <ngx-datatable-column name="State" prop="Location - State">
@@ -34,12 +41,11 @@
     </ng-template>
   </ngx-datatable-column>
 
-  <!-- Column 3: Zip Code -->
-  <ngx-datatable-column name="Zip Code" prop="Location - Zip Code">
+  <!-- <ngx-datatable-column name="City" prop="Location - City">
     <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row["Location - Zip Code"] }}
+      {{ row["Location - City"] }}
     </ng-template>
-  </ngx-datatable-column>
+  </ngx-datatable-column> -->
 
   <!-- Column 4: Bedrooms -->
   <ngx-datatable-column name="Bedrooms" prop="Features - Qty Bedrooms">
