@@ -45,6 +45,10 @@ export class ListingComponent implements OnInit {
           price: row["💰Price Override"],
           rentalType: row["rental type"],
           id: row["_id"],
+          lat: row["Location - slightly different address"]?.lat,
+          lon: row["Location - slightly different address"]?.lng,
+          pricingId: row["pricing_list"],
+          address: row["Location - slightly different address"]?.address
           // ...row
 
         }));
