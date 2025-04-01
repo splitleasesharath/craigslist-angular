@@ -17,6 +17,9 @@ export class ListingViewComponent implements OnInit {
   minDate!: string;
   listingId: string = '';
 
+  // Holds the extracted photo URLs.
+  photoLinks: string[] = [];
+
   laundryOptions: string[] = [
     'w/d in unit',
     'w/d hookups',
@@ -81,22 +84,21 @@ export class ListingViewComponent implements OnInit {
         bedrooms: this.data.selectedRow.bedrooms,
         bathrooms: this.data.selectedRow.bathrooms,
         sqft: this.data.selectedRow.sqft,
-        price: this.data.selectedRow.price,
+        price: this.data.selectedRow.price, // will be updated by pricing API
         rentalType: this.data.selectedRow.rentalType,
         lat: this.data.selectedRow.lat,
         lon: this.data.selectedRow.lon,
-        pricingId: this.data.selectedRow.pricingId,
-        // Optionally patch uniqueId if available in selectedRow:
-    
+        pricingId: this.data.selectedRow.pricingId // used for pricing API call
       });
       // Set the listing id used for photos API.
       this.listingId = this.data.selectedRow.id;
       console.log('listing id==>', this.listingId);
     }
 
-    this.fetchPhotos()
-    this.fetchPricingList()
-    this.fetchReverseGeocode()
+    // Call the APIs sequentially.
+    this.fetchPhotos();
+    this.fetchPricingList();
+    this.fetchReverseGeocode();
   }
 
   closeDialog(): void {
@@ -110,7 +112,7 @@ export class ListingViewComponent implements OnInit {
       title: ['', Validators.required],
       description: ['', Validators.required],
       price: [''],
-      borough: [''],
+      borough: [''],  // For reverse geocode: will be patched with neighbourhood
       zipcode: ['', Validators.required],
       category: [''],
       location: [''],
@@ -139,7 +141,7 @@ export class ListingViewComponent implements OnInit {
       useCopyPaste: [false],
       useMixedDescription: [false],
       dateTime: [''],
-      // Add controls for reverse geocode and pricing list:
+      // Controls for reverse geocode and pricing list:
       lat: [''],
       lon: [''],
       pricingId: [''],
@@ -159,6 +161,7 @@ export class ListingViewComponent implements OnInit {
 
   /**
    * Call the photos API using listingId.
+   * Extracts the Amazon image links and pushes them to photoLinks array.
    */
   fetchPhotos(): void {
     const payload = { listingId: this.listingId };
@@ -166,7 +169,13 @@ export class ListingViewComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Photos response: ', response);
-          // Handle photos response (e.g., update UI)
+          if (response && response.response && response.response.results) {
+            // Extract the Photo field (Amazon link) from each result.
+            this.photoLinks = response.response.results
+              .map(item => item.Photo)
+              .filter(link => !!link);
+            console.log('Extracted photo links:', this.photoLinks);
+          }
         },
         error => {
           console.error('Photos error: ', error);
@@ -175,16 +184,29 @@ export class ListingViewComponent implements OnInit {
       );
   }
 
-
+  /**
+   * Call the pricing list API using pricingId from the form.
+   * From the response, extract "Starting Nightly Price" and patch the form's price field.
+   */
   fetchPricingList(): void {
-
     const pricingId = this.listingForm.value.pricingId;
-    const payload = { uniqueId:pricingId };
+    if (!pricingId) {
+      console.log('No pricingId available to fetch pricing list.');
+      return;
+    }
+    const payload = { uniqueId: pricingId };
     this.dataService.post<any>('http://localhost:3000/listings/pricing-list', payload)
       .subscribe(
         response => {
           console.log('Pricing list response: ', response);
-          // Handle pricing list response (e.g., update UI)
+          if (response && response.response && response.response.results && response.response.results.length > 0) {
+            const pricingData = response.response.results[0];
+            // Patch the form with the "Starting Nightly Price"
+            this.listingForm.patchValue({
+              price: pricingData["Starting Nightly Price"]
+            });
+            console.log('Updated price to:', pricingData["Starting Nightly Price"]);
+          }
         },
         error => {
           console.error('Pricing list error: ', error);
@@ -195,6 +217,7 @@ export class ListingViewComponent implements OnInit {
 
   /**
    * Call the reverse geocode API using lat and lon from the form.
+   * Patches the form with location data: city, borough (from neighbourhood), street, and state.
    */
   fetchReverseGeocode(): void {
     const lat = this.listingForm.value.lat;
@@ -210,12 +233,29 @@ export class ListingViewComponent implements OnInit {
       .subscribe(
         response => {
           console.log('Reverse geocode response: ', response);
-          // Handle reverse geocode response (e.g., patch location fields)
-          // For example, you might update city or street based on the response:
-          if (response && response.address) {
+          // Assuming the response contains the reverse geocode object directly.
+          // For example:
+          // {
+          //   "house_number": "1",
+          //   "road": "Cresta Vista Drive",
+          //   "neighbourhood": "West Portal",
+          //   "city": "San Francisco",
+          //   "state": "California",
+          //   "postcode": "94127",
+          //   ...
+          // }
+          if (response) {
             this.listingForm.patchValue({
               city: response.address.city || '',
-              street: response.address.road || ''
+              borough: response.address.neighbourhood || '', // using neighbourhood as borough
+              street: `${response.address.house_number || ''} ${response.address.road || ''}`.trim(),
+              state: response.address.state || ''
+            });
+            console.log('Reverse geocode patched:', {
+              city: response.city,
+              borough: response.neighbourhood,
+              street: `${response.house_number} ${response.road}`,
+              state: response.state
             });
           }
         },
@@ -224,5 +264,12 @@ export class ListingViewComponent implements OnInit {
           this.notificationService.showError('Failed to fetch reverse geocode data.');
         }
       );
+  }
+
+  save(){
+
+   let payload = this.listingForm.value
+
+   console.log(payload,"=====================>>>>")
   }
 }
