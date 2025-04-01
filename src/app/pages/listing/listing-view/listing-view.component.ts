@@ -17,6 +17,8 @@ export class ListingViewComponent implements OnInit {
   minDate!: string;
   listingId: string = '';
 
+  private newPostUrl = 'http://localhost:3000/post/create';
+
   // Holds the extracted photo URLs.
   photoLinks: string[] = [];
 
@@ -78,7 +80,7 @@ export class ListingViewComponent implements OnInit {
       this.listingForm.patchValue({
         title: this.data.selectedRow.title,
         description: this.data.selectedRow.description,
-        email: this.data.selectedRow.email,
+        // email: this.data.selectedRow.email,
         zipcode: this.data.selectedRow.zipcode,
         state: this.data.selectedRow.state,
         bedrooms: this.data.selectedRow.bedrooms,
@@ -266,10 +268,74 @@ export class ListingViewComponent implements OnInit {
       );
   }
 
+  getRandomCategory(): string {
+    const randomIndex = Math.floor(Math.random() * this.categoryOptions.length);
+    return this.categoryOptions[randomIndex];
+  }
+
   save(){
+    const formValues = this.listingForm.value;
 
-   let payload = this.listingForm.value
+    
+    let payload = {
+      email: formValues.email,
+      password: formValues.password,
+      title: formValues.title,
+      description: formValues.description,
+      price: formValues.price,
+      borough: formValues.borough,
+      zipcode: formValues.zipcode.toString(),
+      category: formValues.category ? formValues.category : this.getRandomCategory(),
+      location: formValues.location,
+      amenities: {
+        laundry: formValues.amenity_laundry ? formValues.amenity_laundry : formValues.laundry,
+        parking: formValues.amenity_parking ? formValues.amenity_parking : formValues.parking
+      },
+      sqft: formValues.sqft.toString(),
+      pets_cat: formValues.pets_cat ? "TRUE" : "FALSE",
+      pets_dog: formValues.pets_dog ? "TRUE" : "FALSE",
+      is_furnished: formValues.is_furnished ? "TRUE" : "FALSE",
+      no_smoking: formValues.no_smoking ? "TRUE" : "FALSE",
+      wheelchaccess: formValues.wheelchaccess ? "TRUE" : "FALSE",
+      airconditioning: formValues.airconditioning ? "TRUE" : "FALSE",
+      ev_charging: formValues.ev_charging ? "TRUE" : "FALSE",
+      available_on: formValues.available_on,
+      street: formValues.street,
+      city: formValues.city,
+      rent: formValues.rent,
+      laundry: formValues.laundry,      // top-level laundry field
+      apt_type: formValues.apt_type,
+      parking: formValues.parking,      // top-level parking field
+      bedrooms: formValues.bedrooms,
+      bathrooms: formValues.bathrooms,
+      rent_period: formValues.rent_period,
+      private_room: formValues.private_room ? 1 : 0,
+      private_bath: formValues.private_bath ? 1 : 0,
+      useCopyPaste: formValues.useCopyPaste,
+      useMixedDescription: formValues.useMixedDescription
+    };
 
-   console.log(payload,"=====================>>>>")
+    if (formValues.dateTime){
+      const date = new Date(formValues.dateTime);
+      const year = date.getFullYear();
+      const month = ("0" + (date.getMonth() + 1)).slice(-2);
+      const day = ("0" + date.getDate()).slice(-2);
+      const hours = ("0" + date.getHours()).slice(-2);
+      const minutes = ("0" + date.getMinutes()).slice(-2);
+      const seconds = ("0" + date.getSeconds()).slice(-2);
+      payload['targetDateTime'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+
+    this.dataService.post<any>(this.newPostUrl, payload).subscribe(
+      (response) => {
+        console.log('New post successful:', response);
+        this.notificationService.showSuccess('Post created successfully', 'Success!');
+        // You can perform further actions here if needed.
+      },
+      (error) => {
+        this.notificationService.showError('Something went wrong!', error);
+        console.error('Error creating new post:', error);
+      }
+    );
   }
 }
