@@ -306,13 +306,14 @@ export class ListingViewComponent implements OnInit {
       laundry: formValues.laundry,      // top-level laundry field
       apt_type: formValues.apt_type,
       parking: formValues.parking,      // top-level parking field
-      bedrooms: formValues.bedrooms,
-      bathrooms: formValues.bathrooms,
+      bedrooms: formValues.bedrooms.toString(),
+      bathrooms: formValues.bathrooms.toString(),
       rent_period: formValues.rent_period,
       private_room: formValues.private_room ? 1 : 0,
       private_bath: formValues.private_bath ? 1 : 0,
       useCopyPaste: formValues.useCopyPaste,
-      useMixedDescription: formValues.useMixedDescription
+      useMixedDescription: formValues.useMixedDescription,
+      // photoLinks:this.photoLinks
     };
 
     if (formValues.dateTime){
